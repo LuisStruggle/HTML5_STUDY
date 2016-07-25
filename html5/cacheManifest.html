@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html manifest="demo.appcache">
+<head>
+    <title>Cache Manifest</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+</head>
+<body>
+    <h2>测试Cache Manifest</h2>
+    <script type="text/javascript">
+		applicationCache.onUpdateReady = function(){
+			alert("当缓存文件更新时，调用此事件！");
+			
+			alert("正在更新本地缓存！");
+			//调用此方法主动去更新本地缓存，如果不调用这个方法，缓存也会更新，只是更新的事件不一样（调用此方法缓存立刻更新，否则将再一次打开文件时才会自己更新）
+			applicationCache.swapCache();
+			alert("更新本地缓存完成！");
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>console的使用</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+
+</head>
+
+<body>
+	<section>
+		<header>
+			<h2>console的使用一</h2></header>
+		<div>
+			<p>console对象5级别种显示信息的方法，分别是一般信息console.log()、console.info()、console.debug()、console.warn()、console.error()。</p>
+			<script type="text/javascript">
+				console.log("log");
+				console.info("info");
+				console.debug("debug");
+				console.warn("warn");
+				console.error("error");				
+			</script>
+		</div>
+	</section>
+	<section>
+		<header>
+			<h2>console的使用二</h2></header>
+		<div>
+			<p>console对象的上面5种方法，都可以使用printf风格的占位符。占位符的种类比较少，只支持字符（%s）、整数（%d或%i）、浮点数（%f）和对象（%o）四种。</p>
+			<mark>提示：%o占位符，可以用来查看一个对象内部情况</mark>
+			<script type="text/javascript">
+				var dog = {};
+
+				console.log("%d年%d月%d日", 2016, 7, 19);
+				console.log("%s--%s", '我是字符串', '子串');
+
+				dog.name = '狗';
+				dog.color = '灰色';
+
+				console.log(dog);
+				console.log("%o", dog);
+			</script>
+		</div>
+	</section>
+	<section>
+		<header>
+			<h2>console的使用三</h2></header>
+		<div>
+			<p>如果信息太多，可以分组显示，用到的方法是console.group()和console.groupEnd()。</p>
+			<script type="text/javascript">
+				console.group("第一组");
+				console.log("第一个元素");
+				console.log("第二个元素");
+				console.groupEnd();
+				console.group("第二组");
+				console.log("第一个元素");
+				console.log("第二个元素");
+				console.groupEnd();
+			</script>
+		</div>
+	</section>
+	<section>
+		<header>
+			<h2>console的使用四</h2></header>
+		<div>
+			<p>console.dir()可以显示一个对象所有的属性和方法。</p>
+			<script type="text/javascript">
+				dog.age = function() {
+					console.log(5);
+				}
+				console.dir(dog);
+			</script>
+		</div>
+	</section>
+	<section>
+		<header>
+			<h2>console的使用五</h2></header>
+		<div>
+			<p>console.dirxml()用来显示网页的某个节点（node）所包含的html/xml代码。</p>
+			<script type="text/javascript">
+				var html = document.querySelectorAll("section")[4];
+				console.dirxml(html);
+			</script>
+		</div>
+	</section>
+	<section>
+		<header>
+			<h2>console的使用六</h2></header>
+		<div>
+			<p>console.trace()用来追踪函数的调用轨迹。</p>
+			<script type="text/javascript">
+				function add(a, b) {
+					console.trace();
+					return a + b;
+				}
+				add(1, 2);
+			</script>
+		</div>
+	</section>	
+	<section>
+		<header>
+			<h2>console的使用七</h2></header>
+		<div>
+			<p>console.time()和console.timeEnd()，用来显示代码的运行时间。</p>
+			<script type="text/javascript">
+				console.time("代码运行时间");
+				var j = 0;
+				for (var i = 0; i < 1000; i++) {
+					j++;
+				}
+				console.log("%d", j);
+				console.timeEnd("代码运行时间");
+			</script>
+		</div>
+	</section>
+	<section>
+		<header>
+			<h2>console的使用八</h2></header>
+		<div>
+			<p>console.assert()，用来判断表达式，当表达式为false时，显示后面的字符串。</p>
+			<script type="text/javascript">
+				console.assert(1 > 2, "1大于2");
+				console.assert(1 < 2, "1小于2");
+			</script>
+		</div>
+	</section>
+	<section>
+		<header>
+			<h2>console的使用九</h2></header>
+		<div>
+			<p>性能分析（Profiler）就是分析程序各个部分的运行时间，找出瓶颈所在，使用的方法是console.profile()。</p>
+			<mark>提示：假定有一个函数Foo()，里面调用了另外两个函数funcA()和funcB()，其中funcA()调用10次，funcB()调用1次。</mark>
+		
+			<script type="text/javascript">
+				function Foo() {
+					for (var i = 0; i < 10; i++) {
+						funcA(1000);
+					}
+					funcB(10000);
+				}
+				function funcA(count) {
+					for (var i = 0; i < count; i++) {}
+				}
+				function funcB(count) {
+					for (var i = 0; i < count; i++) {}
+				}
+				
+				console.profile("性能测试");
+				Foo();
+				console.profileEnd();
+			</script>
+		</div>
+	</section>
+</body>
+
+</html>

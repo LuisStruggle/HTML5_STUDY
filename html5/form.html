@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>form-study</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <style type="text/css">
+        input{margin-top:10px;color:#177fd9;}
+    </style>
+</head>
+<body>
+    <div>
+        <!-- form练习 -->
+        <form>
+            <!-- html5新的input属性测试 -->
+            <label for="text">普通文本：</label><input type="text" id="text" name="text" disabled /><br/>
+            <!-- email的使用 -->
+            <label for="email">电子邮箱：</label><input type="email" id="email" name="email" multiple/><br/>
+            <!-- datalist的使用 -->
+            <label for="datalist">datalist：</label><input type="text" id="datalist" name="datalist" list="data-list"/>
+            <datalist id="data-list">
+                <option label="W3School" value="http://www.w3school.com.cn" />
+                <option label="Google" value="http://www.google.com" />
+                <option label="Microsoft" value="http://www.microsoft.com" />
+            </datalist>
+            <br/>
+            <!-- url的使用 -->
+            <label for="url">网站网址：</label><input type="url" id="url" name="url" autofocus novalidate="true"/><br/>
+            <!-- number的使用 -->
+            <label for="number">number值：</label><input type="number" id="number" name="number" min="0" max="15" step="3"/><br/>
+            <!-- range的使用 -->
+            <label for="range">滑动数字：</label><input type="range" id="range" name="range" min="0" max="15" step="3" value="6"/><br/>
+            <!-- date的使用 -->
+            <label for="date">date使用：</label><input type="date" id="date" name="date" /><br/>
+            <!-- month的使用 -->
+            <label for="month">月份使用：</label><input type="month" id="month" name="month" /><br/>
+            <!-- time的使用 -->
+            <label for="time">time使用：</label><input type="time" id="time" name="time" /><br/>
+            <!-- datetime的使用 -->
+            <label for="datetime">UTC 时间：</label><input type="datetime" id="datetime" name="datetime" /><br/>
+            <!-- datetime-local的使用 -->
+            <label for="datetime-local">本地时间：</label><input type="datetime-local" id="datetime-local" name="datetime-local" /><br/>
+            <!-- 正则表达式 -->
+            <label for="pattern">正则使用：</label><input type="text" id="pattern" name="pattern" required pattern="[A-Za-z]{3}"/><br/>           
+            <input type="submit" value="提交" />
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>canvas</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+</head>
+<body>
+    <h2>canvas-study1</h2>
+    <!-- 画矩形 -->
+    <canvas id="canvas1" width="100px" height="100px" style="border:1px solid #ccc;"></canvas>
+    <h2>canvas-study2</h2>
+    <!-- 画线条 -->
+    <canvas id="canvas2" width="100px" height="100px" style="border:1px solid #ccc;"></canvas>
+    <h2>canvas-study3</h2>
+    <!-- 画圆 -->
+    <canvas id="canvas3" width="100px" height="100px" style="border:1px solid #ccc;"></canvas>    
+    <h2>canvas-study4</h2>
+    <!-- 渐变色 -->
+    <canvas id="canvas4" width="100px" height="100px" style="border:1px solid #ccc;"></canvas>
+    <h2>canvas-study5</h2>
+    <!-- 图像 -->
+    <canvas id="canvas5" width="100px" height="100px" style="border:1px solid #ccc;"></canvas>
+    <script type="text/javascript">
+        load();
+        
+        var canvas1 = document.getElementById("canvas1");
+        var canvasCxt1 = canvas1.getContext("2d");
+        canvasCxt1.fillStyle = "#FF0000";
+        canvasCxt1.fillRect(10, 10, 50, 50);
+
+        var canvas2 = document.getElementById("canvas2");
+        var canvasCxt2 = canvas2.getContext("2d");
+        canvasCxt2.moveTo(10, 10);
+        canvasCxt2.lineTo(100, 50);
+        canvasCxt2.lineTo(10, 50);
+        canvasCxt2.stroke();
+
+        var canvas3 = document.getElementById("canvas3");
+        var canvasCxt3 = canvas3.getContext("2d");
+        canvasCxt3.fillStyle = "#FF0000";
+        canvasCxt3.beginPath();
+        canvasCxt3.arc(50, 50, 20, 0, Math.PI * 2, true);
+        canvasCxt3.closePath();
+        canvasCxt3.fill();
+
+        var canvas4 = document.getElementById("canvas4");
+        var canvasCxt4 = canvas4.getContext("2d");
+        var grd = canvasCxt4.createLinearGradient(0, 0, 0, 100);
+        grd.addColorStop(0, "#868585");
+        grd.addColorStop(0.5, "#aaa3a3");
+        grd.addColorStop(1, "#ffffff");
+        canvasCxt4.fillStyle = grd;
+        canvasCxt4.fillRect(0, 0, 100, 100);
+
+        // 仅当图片加载完，才可以将其插入画布中
+        function drawBeauty(beauty) {
+            var canvas5 = document.getElementById("canvas5");
+            var canvasCxt5 = canvas5.getContext("2d");
+            canvasCxt5.drawImage(beauty, 0, 0);
+        }
+
+        function load() {
+            var beauty = new Image();
+            beauty.src = "flower.png";
+            if (beauty.complete) {
+                drawBeauty(beauty);
+            } else {
+                beauty.onload = function() {
+                    drawBeauty(beauty);
+                };
+                beauty.onerror = function() {
+                    window.alert('图片加载失败！');
+                };
+            };
+        }
+        
+        /*if (document.all) {
+            window.attachEvent('onload', load);
+        } else {
+            window.addEventListener('load', load, false);
+        }*/
+    </script>
+</body>
+</html>

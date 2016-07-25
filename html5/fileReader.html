@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FileReader</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+</head>
+<body>
+	<p>描述：FileReader有三个方法和几个文件操作过程中的事件。</p>
+	<p>方法：readAsBinaryString将文件读取为二进制码（适合向后端传送数据）</p>
+	<p>方法：readAsText将文件读取为文本（适合读取文本文件内容）</p>
+	<p>方法：readAsDataURL将文件读取为特殊格式的URL（适合读取图像和html格式的文件内容）</p>
+	<section>
+		<header><h2>FileReader接口方法的使用</h2></header>
+		<div>
+			<p><mark>图片的读取并显示</mark></p>
+			<p>
+				<label for="imageFile">图片上传：</label>
+				<input id="imageFile" type="file" accept="image/jpeg,image/gif" />
+				<button onclick="imageFile();">上传</button>
+			</p>
+			<p><img src="#" id="showImage" style="display:none;"/></p>			
+		</div>
+	</section>
+	<section>
+		<header><h2>FileReader接口方法的使用</h2></header>
+		<div>
+			<p><mark>TXT的读取并显示</mark></p>
+			<p>
+				<label for="textFile">文本上传：</label>
+				<input id="textFile" type="file" accept="text/plain" />
+				<button onclick="textFile();">上传</button>
+			</p>
+			<p><span id="showText" style="display:none;"></span></p>			
+		</div>
+	</section>
+	<script type="text/javascript">
+		var fileReader = null;
+		var imageFile = function(){
+			fileReader = new FileReader();
+			var imageObj = document.getElementById("imageFile").files[0];
+			fileReader.readAsDataURL(imageObj);
+			fileReader.onload = function(event){
+				// this.result和event.target.result都可以读取
+				document.getElementById("showImage").src = event.target.result;
+				document.getElementById("showImage").style.display = "";
+			}
+		}
+		var textFile = function(){
+			fileReader = new FileReader();			
+			var textObj = document.getElementById("textFile").files[0];
+			// 未开始读取是0
+			alert(fileReader.readyState);
+			fileReader.readAsText(textObj);
+			// 一开始读取是1
+			alert(fileReader.readyState);
+			fileReader.onload = function(event){
+				// this.result和event.target.result都可以读取
+				document.getElementById("showText").innerHTML = this.result;
+				document.getElementById("showText").style.display = "";
+			}
+		}
+	</script>
+</body>
+</html>

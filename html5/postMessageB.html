@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>postMessage</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+</head>
+<body>
+    <h2>postMessage的使用</h2>
+    <p>利用A域嵌套B域，利用B域发送请求，<mark>B域收到A域的请求</mark>，处理，并返回相应的结果</p>
+    <div id="message"></div>
+    <script type="text/javascript">
+        window.addEventListener('message', function(e) {            
+            if (e.source != window.parent) {
+                return;
+            }
+            document.querySelector("[id='message']").innerHTML = e.data;
+            window.parent.postMessage("我是返回的值", '*');
+        }, false);
+    </script>
+</body>
+</html>

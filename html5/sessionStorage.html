@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>sessionStorage</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+</head>
+<body>
+    <!-- sessionStorage - 针对一个 session 的数据存储 -->
+    <script type="text/javascript">
+        if (sessionStorage.age) {
+            sessionStorage.age = Number(sessionStorage.age) + 1;
+        } else {
+            sessionStorage.age = 1;
+        }
+        document.write(sessionStorage.age);
+    </script>
+</body>
+</html>

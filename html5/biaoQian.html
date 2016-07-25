@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>标签学习</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+</head>
+<body>
+    <!-- 测试1 -->
+    <h2>figure和figcaption的学习</h2>
+    <figure style="width:690px;">
+        <figcaption>我是定义figure （标签规定独立的流内容：图像、图表、照片、代码等等）的标签</figcaption>
+        <img src="flower.png" />
+        <img src="flower.png" />
+        <img src="flower.png" />
+    </figure>
+    
+    <!-- 测试2 -->
+    <h2>mark定义<mark>有记号</mark>的文本</h2>
+    
+    <!-- 测试3 -->
+    <h2>progress定义任何类型的任务进度</h2>
+    <span>提示：请结合 <progress></progress> progress标签与 JavaScript 一同使用，来显示任务的进度。</span><br/>
+    <span>注释：progress标签不适合用来表示度量衡（例如，磁盘空间使用情况或查询结果）。如需表示度量衡，请使用meter标签代替。</span>
+    <p>任务完成进度：<progress max="100" value="20"></progress></p>
+    
+    <!-- 测试4 -->
+    <h2>details和summary的使用</h2>
+    <span>提示：summary是为details定义标题，应和details一起使用</span><br/>
+    <span>details标签用于描述文档或文档某个部分的细节。</span><br/><br/>
+    <details>
+        <summary>定义details的标题</summary>
+        <p>我是details定义的描述内容，一般是隐藏的，只有点开标题才可以看到我哦！</p>
+    </details>
+    
+    <!-- 测试5 -->
+    <h2>meter表示度量衡标签的学习</h2>
+    <span>low和height在度量衡上颜色一样和中间的部分是不一样的，标识高低的一个范围</span>
+    <meter value="3" max="9" min="1" high="6" low="4" optimum="5"></meter>
+    
+    <!-- 测试6 -->
+    <h2>nav定义导航菜单的一个标签</h2>
+    <span>注释：个人理解和header，footer，article，section一样只是个规范</span>
+    <nav>
+        <a href="#">首页</a>
+        <a href="#">新闻公告</a>
+        <a href="#">关于我们</a>
+    </nav>
+    <p>
+        <a href="#">首页</a>
+        <a href="#">新闻公告</a>
+        <a href="#">关于我们</a>
+    </p>
+    
+    <!-- 测试7 -->
+    <h2>section和传统的div区别</h2>
+    <span>注释：article,aside,nav,section等对某些标签的传统样式有所改变（h1标签就有改变）</span>
+    <section>
+        <h1>PRC</h1>
+        <p>The People's Republic of China was born in 1949...</p>
+    </section>
+    <div>
+        <h1>PRC</h1>
+        <p>The People's Republic of China was born in 1949...</p>
+    </div>
+    
+    <!-- 测试8 -->
+    <h2>article和传统的div区别</h2>
+    <article>
+        <h1>Internet Explorer 9</h1>
+        <p>Windows Internet Explorer 9（简称 IE9）于 2011 年 3 月 14 日发布.....</p>
+    </article>
+    <div>
+        <h1>Internet Explorer 9</h1>
+        <p>Windows Internet Explorer 9（简称 IE9）于 2011 年 3 月 14 日发布.....</p>
+    </div>
+</body>
+</html>

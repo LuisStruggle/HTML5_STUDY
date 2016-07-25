@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>localStorage</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+</head>
+<body>
+    <!-- localStorage - 没有时间限制的数据存储 -->
+    <div id="ls1"></div>
+    <script type="text/javascript">
+        localStorage.name = "liuyang";
+        document.getElementById("ls1").innerHTML = localStorage.name;
+        
+        if (localStorage.age) {
+            localStorage.age = Number(localStorage.age) + 1;
+        } else {
+            localStorage.age = 1;
+        }
+        document.write(localStorage.age);
+		
+		//另外一种设置键值方法
+		localStorage.setItem("liu","yang");
+		console.log(localStorage.getItem("liu"));
+		localStorage.removeItem("liu");
+    </script>
+</body>
+</html>

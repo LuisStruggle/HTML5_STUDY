@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>multiple-file-upload</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<script type="text/javascript" src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+</head>
+
+<body>
+	<section>
+		<header>
+			<h2>multipleFileUpload（多文件上传）</h2></header>
+		<div>
+			<form action="javascript:multipleFileUpload();" method="post">
+				<label for="multipleFile">多文件上传：</label>
+				<!--多文件上传-->
+				<input id="multipleFile" type="file" multiple="multiple" accept="image/gif, image/jpeg" />
+				<input type="submit" value="上传" />
+			</form>
+		</div>
+	</section>
+	<script type="text/javascript">
+		var multipleFileUpload = function() {
+			// 获取文件对象
+			var files = document.getElementById("multipleFile").files;
+			var length = files.length;
+
+			// 将多个文件的文件名和文件对应得文件内容，封装到FormData对象中，传递到后台			
+			// crossDomain:true，ajax跨域请求			
+
+			for (var i = 0; i < length; i++) {
+				// 该对象在控制台打印不出值
+				var formdata = new FormData();
+
+				// 普通字段
+				formdata.append("fileName", files[i].name);
+
+				// 文件对象
+				formdata.append("fileContent", files[i]);
+
+				$.ajax({
+					type: "POST",
+					url: "http://127.0.0.1:8080/testMultipleFile/test",
+					data: formdata,
+					async: false,
+					dataType: "json",
+					crossDomain: true,
+					processData: false, //注意：让jquery不要处理数据
+					contentType: false, //注意：让jquery不要设置contentType
+					success: function(data) {
+						if (data.status == 1) {
+							console.log("第" + i + "文件上传成功！");
+						} else {
+							console.error("第" + i + "文件上传失败！");
+						}
+					},
+					error: function() {
+						console.error("第" + i + "文件上传失败！");
+					}
+				});
+			}
+
+		}
+	</script>
+</body>
+
+</html>

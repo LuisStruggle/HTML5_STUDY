@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>canvas之统计图插件raraph的使用</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<script type="text/javascript" src="RGraph4.56-stable/RGraph/libraries/RGraph.common.core.js"></script>
+	<script type="text/javascript" src="RGraph4.56-stable/RGraph/libraries/RGraph.bar.js"></script>
+</head>
+
+<body>
+	<section>
+		<header>
+			<h2>基于canvas特性的统计图插件的使用</h2></header>
+		<div>
+			<canvas width="500" height="500" id="canvas">
+				<span>你的浏览器不支持canvas！</span>
+			</canvas>
+		</div>
+	</section>
+	<script type="text/javascript">
+		new RGraph.Bar({
+			id: "canvas",
+			data: [1, 2, 3, 4, 5],
+			options: {
+				labels: ['一', '二', '三', '四', '五'],
+				hmargin: 25,
+				title: 'Rgraph之柱状图',				
+				colors: {
+					sequential: true
+				}
+			}
+		}).draw();
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>video-canvas</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+</head>
+
+<body>
+	<section>
+		<header><h2>video-canvas，实现video播放，canvas同步动画展示</h2></header>
+		<video src="movie.mp4" controls width="500" height="300">
+			<span>你当前的浏览器不支持视频播放！</span>
+		</video>
+		<canvas></canvas>
+	</section>
+	<script type="text/javascript">
+		var video = document.querySelector("video");
+		var canvas = document.querySelector("canvas");
+		var context = canvas.getContext("2d");
+		var obj = null;
+		// 开始一个画布
+		context.beginPath();
+		canvas.width = video.width;
+		canvas.height = video.height;
+		
+		video.addEventListener("play",function(){
+			obj = setInterval(function(){
+				context.drawImage(video, 0, 0, canvas.width, canvas.height);
+			},20);
+		},false);
+		
+		video.addEventListener("pause",function(){
+			if(obj!=null){
+				clearInterval(obj);
+				obj = null;
+			}
+		},false);
+		
+		video.addEventListener("ended",function(){
+			if(obj!=null){
+				clearInterval(obj);
+				obj = null;
+			}
+		},false);
+		
+		// 结束一个画布
+		context.closePath();
+	</script>
+</body>
+
+</html>

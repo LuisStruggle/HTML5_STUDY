@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Math</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <style type="text/css">
+        section{width: 100px;height: 100px;border: 1px solid red;float: left;margin-right: 10px;text-align: center;}
+    </style>
+    <script type="text/javascript">
+        window.onload=function(){
+            var sec=document.getElementsByTagName("section");
+            sec[0].style.background="red";
+            for(var i=0;i<sec.length;i++){
+                sec[i].onclick=function(){
+                    if(this.style.background=="red"){
+                        this.style.background="";
+                        var random=Math.floor(Math.random()*4);
+                        while(sec[random]==this){
+                            random=Math.floor(Math.random()*4);
+                        }
+                        sec[random].style.background="red";
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Math函数使用趣事</h2>
+    <section><h1>1</h1></section>
+    <section><h1>2</h1></section>
+    <section><h1>3</h1></section>
+    <section><h1>4</h1></section>
+</body>
+</html>

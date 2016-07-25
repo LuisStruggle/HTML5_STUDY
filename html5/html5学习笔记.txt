@@ -1,0 +1,6 @@
+1，先学习大概标签，然后自己找点网页自己设计一下（这个星期搞定）；
+2，css3和html5新的学习：新增加了25个标签分别是article（定义文章）、aside（定义页面内容之外的内容）、audio（定义声音内容）、canvas（定义图形）、command（定义命令按钮）、datagrid（定义树列表中的数据）、datalist（定义下拉列表）、datatemplate（定义数据模板）、datails（定义元素细节）、dialog（定义对话）、event-source（为服务器发送的事件定义目标）、figure（定义媒介内容的分组，以及它们的标题）、footer（定义section或page的页脚）、header（定义section或page的页眉）、m（定义有记号的文本）、meter（定义预定义范围内的度量）、nav（定义导航链接）、nest（定义数据模板中的嵌套点）、output（定义输出的一些类型）、progress（定义任何类型的任务进度）、rule（为升级模板定义规则）、section（定义section部分）、source（定义媒介源）、time（定义日期/时间）、video（定义视频）；
+3，html5废弃了font、frame、frameset等的标签；
+4，video的loop属性，当视频播放完会循环播放；
+5，一个section或article应该有标题，这是语义定义，如果要加样式，应使用div。如果这两个标签有多个标题，则默认第二个包括以后的标题都是隐士的包含于section中。nva和asaside不需要包含标题。hgroup对多级标题进行分组。
+6，header用于整个页面的标题或article或section的标题

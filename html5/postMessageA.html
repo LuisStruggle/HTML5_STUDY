@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>postMessage</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <script type="text/javascript">
+        
+    </script>
+</head>
+<body>
+    <h2>postMessage的使用</h2>
+    <p>利用A域嵌套B域，利用B域发送请求，<mark>B域收到A域的请求</mark>，处理，并返回相应的结果</p>
+    <div id="message"></div>
+    <iframe id="child" src="postMessageB.html" width="100%"></iframe>
+    <script type="text/javascript">
+        window.onload = function() {
+            window.frames[0].postMessage('我是发送的值', '/');
+        }
+        window.addEventListener("message", function(e) {
+            document.querySelector("[id='message']").innerHTML = e.data;
+        }, false);
+    </script>
+</body>
+</html>

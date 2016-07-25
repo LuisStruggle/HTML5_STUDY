@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>video新特征（倒放和截屏）</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <style type="text/css">
+		video{
+			background: #000;
+		}
+	</style>
+</head>
+<body>
+	<section>
+		<header><h2>简单的视频倒放和截屏</h2></header>
+		<div>
+			<video src="movie.mp4" controls width="500" height="300">
+				<span>你当前的浏览器不支持视频播放！</span>
+			</video>
+		</div>
+		<p><button onclick="daoFang();">倒放</button><code>&nbsp;&nbsp;</code><button onclick="jiePing();">截屏</button></p>
+	</section>
+	<section>
+		<header><h2>截屏输入到该画布中（实际尺寸）</h2></header>
+		<canvas></canvas>
+	</section>
+	<section>
+		<header><h2>截屏输入到该画布中（虚拟尺寸）</h2></header>
+		<canvas></canvas>
+	</section>
+	<script type="text/javascript">
+		var video = document.querySelector("video");
+		var daoFangSpeed = video.playbackRate;
+		var daoInterval = null;
+		var daoFangObject = document.querySelector("button[onclick]");
+		var daoFang = function(){					
+			if(video.currentTime!=0&&daoFangObject.innerHTML=="倒放"){
+				daoFangObject.innerHTML = "取消倒放";
+				daoInterval = setInterval(daoFangBody,200);				
+			}else{
+				daoFangObject.innerHTML = "倒放";
+				if(daoInterval!=null){
+					clearInterval(daoInterval);
+					daoInterval = null;
+				}
+			}
+		}
+		var daoFangBody = function(){
+			if(video.currentTime<0.2){
+				daoFangObject.innerHTML = "倒放";
+				if(daoInterval!=null){
+					clearInterval(daoInterval);
+					daoInterval = null;
+					video.currentTime = 0;
+					video.pause();
+				}
+			}else{
+				video.currentTime-=0.2;
+			}
+		}		
+		
+		var jiePing = function(){
+			var canvas1 = document.querySelectorAll("canvas")[0];
+			var context1 = canvas1.getContext("2d");
+			// 开始一个画布
+			context1.beginPath();
+			canvas1.width = video.videoWidth;
+			canvas1.height = video.videoHeight;
+			context1.drawImage(video,0,0,canvas1.width,canvas1.height);
+			// 结束一个画布
+			context1.closePath();
+			
+			var canvas2 = document.querySelectorAll("canvas")[1];
+			var context2 = canvas2.getContext("2d");
+			// 开始一个画布
+			context2.beginPath();
+			canvas2.width = video.width;
+			canvas2.height = video.height;
+			context2.drawImage(video,0,0,canvas2.width,canvas2.height);
+			// 结束一个画布
+			context1.closePath();
+		}
+	</script>
+</body>
+</html>

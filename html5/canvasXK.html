@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>canvas炫酷案例</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<style type="text/css">
+		#canvas {
+			border-radius: 5px;
+			border: 1px solid #ccc;
+			box-shadow: 0px 0px 10px #000;
+		}
+	</style>
+</head>
+
+<body>
+	<h2>canvas炫酷特效</h2>
+	<canvas width="500" height="500" id="canvas"></canvas>
+
+	<script type="text/javascript">
+		var canvas = document.getElementById("canvas");
+		var width = canvas.width;
+		var height = canvas.height;
+		var context = canvas.getContext("2d");
+		
+		// 比较这两者的区别
+		console.trace("bb");		
+		console.log("bb");		
+		
+		// 存储context对象
+		context.save();
+		// 清空画布
+		context.clearRect(0, 0, width, height);
+
+		// 开始一个子集画布
+		context.beginPath();
+
+		context.strokeStyle = "#00ff00";
+		context.lineWidth = 5;
+		context.strokeRect(0, 0, width, height);
+		context.stroke();
+
+		context.fillStyle = "#bfbff8";
+		context.fillRect((width / 4) - 1, (height / 4) - 1, (width / 2) + 1, (height / 2) + 1);
+		context.fill();
+
+		// 结束一个子集画布
+		context.closePath();
+
+		// 开始一个子集画布
+		context.beginPath();
+
+		context.fillStyle = "#ff0000";
+		context.lineJoin = "round";
+		context.lineCap = "round"
+		context.strokeStyle = "#ff0000";
+		context.lineWidth = 1;
+		context.moveTo(width / 2, height / 4);
+		context.lineTo(width / 4, height * 3 / 4);
+		context.lineTo(width * 3 / 4, height / 2);
+		context.lineTo(width / 4, height / 4);
+		context.lineTo(width / 2, height * 3 / 4);
+		context.lineTo(width * 3 / 4, height / 4);
+		context.lineTo(width / 4, height / 2);
+		context.lineTo(width * 3 / 4, height * 3 / 4);
+		context.lineTo(width / 2, height / 4);
+		// 设置模糊，阴影
+		context.shadowColor="#000";
+		context.shadowBlur=20;
+		context.fill();
+		context.stroke();
+
+		// 结束一个子集画布
+		context.closePath();
+
+
+		/*// 开始三角形的绘制
+		context.beginPath();
+		context.fillStyle="#ff0000";		
+		context.moveTo(width/4,height/4);
+		context.lineTo(width/4,height/2);
+		context.lineTo(width/2,height/2);
+		context.lineTo(width/4,height/4);
+		context.fill();
+		context.stroke();		
+		context.closePath();
+		// 结束三角形的绘制*/
+
+		// 恢复存储的context对象
+		context.restore();
+	</script>
+</body>
+
+</html>

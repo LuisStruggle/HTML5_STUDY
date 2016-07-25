@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>video-study</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+</head>
+<body>
+    <h2>video-study1</h2>
+    <div>
+        <!-- loop：循环播放，muted：静音，poster：开始播放前显示的图片，preload：预加载视频 -->
+        <video controls="controls" width="400px" height="300px;" loop="loop" muted="muted" preload="metadata">
+            <source src="movie.mp4" type="video/mp4" />
+            您的浏览器暂不支持html5的video！
+        </video>
+    </div>
+    
+    <!-- 通过dom控制video -->
+    <h2>video-study2</h2>
+    <div style="line-height:35px;">
+        <button onclick="playPause();">开始/暂停</button>
+        <button onclick="big();">大</button>
+        <button onclick="middle();">中</button>
+        <button onclick="small();">小</button>
+    </div>
+    <div>    
+        <video width="400px" height="300px;" id="video2" style="border:1px solid red;" controls>
+            <source src="movie.mp4" type="video/mp4" />
+            您的浏览器暂不支持html5的video！
+        </video>
+    </div>
+    <script type="text/javascript">
+        var video = document.getElementById("video2");
+        var playPause = function(){
+            if(video.paused){
+                video.play();
+            }else{
+                video.pause();
+            }
+        }
+        var big = function(){
+            video.width=500;
+        }
+        var middle = function(){
+            video.width=400;
+        }
+        var small = function(){
+            video.width=300;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>WebSocket</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<script>
+		function checkWS() {
+			// 验证浏览器是否支持WebSocket
+			if (window.WebSocket) {
+				alert("HTML5 WebSocket is supported in your browser.");
+			} else {
+				alert("HTML5 WebSocket is not supported in your browser.");
+			}
+		}
+	</script>
+	<style type="text/css">
+		#msg-body {
+			width: 400px;
+			height: 600px;
+			background: #e0e0e0;
+			margin-top: 10px;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+		}
+		
+		#message {
+			clear: both;
+			width: 100%;
+			height: 570px;
+			overflow-y: scroll;
+		}
+		
+		#online {
+			text-align: center;
+			width: 100%;
+			height: 30px;
+			line-height: 30px;
+			font-size: 12px;
+			font-weight: bold;
+		}
+		
+		.demo {
+			padding-bottom: 20px;
+			padding-left: 20px;
+			position: relative;
+			clear: both;
+			display:inline-block;
+			float: left;
+		}
+		
+		.triangle {
+			position: absolute;
+			top: 6px;
+			left: 12px;
+			display: block;
+			width: 0;
+			height: 0;
+			overflow: hidden;
+			line-height: 0;
+			font-size: 0;
+			border-bottom: 8px solid #e0e0e0;
+			border-top: 8px solid #e0e0e0;
+			border-left: none;
+			border-right: 8px solid #3079ED;
+		}
+		
+		.article {
+			color: #FFF;
+			float: left;
+			display: inline-block;
+			*display: inline;
+			zoom: 1;
+			padding: 5px 10px;
+			border: 1px solid #3079ED;
+			background: #eee;
+			border-radius: 5px;
+			background-color: #4D90FE;
+			background-image: -webkit-gradient(linear, left top, left bottom, from(#4D90FE), to(#4787ED));
+			background-image: -webkit-linear-gradient(top, #4D90FE, #4787ED);
+			background-image: -moz-linear-gradient(center top, #4D90FE, #4787ED);
+			background-image: linear-gradient(top, #4D90FE, #4787ED);
+			width: 89%;
+		}
+		
+		.fr {
+			padding-left: 0px;
+			padding-right: 20px;
+			float: right;
+		}
+		
+		.fr .triangle {
+			left: auto;
+			right: 12px;
+			border-bottom: 8px solid #e0e0e0;
+			border-top: 8px solid #e0e0e0;
+			border-right: none;
+			border-left: 8px solid #3079ED;
+		}
+		
+		.fr .article {
+			float: right;
+		}
+	
+		mark {
+			font-size: 14px;
+			font-weight: bold;
+		}
+	</style>
+</head>
+
+<body>
+	<h2>WebSocket的学习和使用</h2>
+	<div>
+		<input id="text" placeholder="请输入发送的消息！" required type="text" />
+		<button onclick="send()">发送</button>
+		<button onclick="checkWS();">验证</button>
+		<button onclick="closeWebSocket()">关闭</button>
+		<span style="font-size:12px;">状态：<mark></mark></span>
+	</div>
+	<div id="msg-body">
+		<header id="online"></header>
+		<div id="message"></div>
+	</div>
+
+	<script type="text/javascript">
+		var websocket = null;
+		var flag = false;
+
+		//判断当前浏览器是否支持WebSocket
+		if ('WebSocket' in window) {
+			websocket = new WebSocket("ws://127.0.0.1:8080/testWebSocket/websocket");
+		} else {
+			document.querySelector("mark").innerHTML = 'Not support websocket';
+		}
+
+		//连接发生错误的回调方法
+		websocket.onerror = function() {
+			document.querySelector("mark").innerHTML = "error";
+		};
+
+		//连接成功建立的回调方法
+		websocket.onopen = function(event) {
+			document.querySelector("mark").innerHTML = "open";
+		}
+
+		//接收到消息的回调方法
+		websocket.onmessage = function(event) {
+			var msg = event.data;
+			if (msg.indexOf("onlineCount") > -1) {
+				var online = msg.substring(msg.indexOf(":") + 1, msg.length);
+				document.querySelector("#online").innerHTML = "当前在线人数为" + online + "人";
+			} else {
+				setMessageInnerHTML(msg);
+			}
+			console.log(event);
+		}
+
+		//连接关闭的回调方法
+		websocket.onclose = function() {
+			document.querySelector("mark").innerHTML = "close";
+		}
+
+		//监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+		window.onbeforeunload = function() {
+			websocket.close();
+		}
+
+		//将消息显示在网页上
+		function setMessageInnerHTML(innerHTML) {
+			if (flag) {
+				flag = false;
+				document.getElementById('message').innerHTML += '<div class="demo clearfix"><span class="triangle"></span><div class="article">' + innerHTML + '</div></div>';
+			} else {
+				document.getElementById('message').innerHTML += '<div class="demo clearfix fr"><span class="triangle"></span><div class="article">' + innerHTML + '</div></div>';
+			}
+		}
+
+		//关闭连接
+		function closeWebSocket() {
+			websocket.close();
+		}
+
+		//发送消息
+		function send() {
+			flag = true;
+			var message = document.getElementById('text').value;
+			websocket.send(message);
+		}
+	</script>
+</body>
+
+</html>

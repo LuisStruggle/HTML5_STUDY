@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web Worker</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+</head>
+<body>
+    <h2>Web Worker学习</h2>
+    <p>计数器：
+        <span id="count"></span>
+    </p>
+    <button onclick="startWorker()">开启worker</button>
+    <button onclick="stopWorker()">停止worker</button>    
+
+    <script type="text/javascript">
+        var w;
+
+        function startWorker() {
+            // 判断浏览器是否支持worker，如果支持，判断worker对象是否存在
+            if (typeof(Worker)!="undefined"){                
+                if(typeof(w)=="undefined"){
+                    w=new Worker("worker.js");
+                }
+				
+				w.postMessage("hello");
+				
+                w.onmessage = function(event){
+                    document.getElementById("count").innerHTML=event.data;
+                }
+                
+            }else{
+                document.getElementById("count").innerHTML="你的浏览器暂不支持worker";
+            }           
+        }
+
+        function stopWorker() {
+            w.terminate();
+        }
+    </script>
+</body>
+</html>

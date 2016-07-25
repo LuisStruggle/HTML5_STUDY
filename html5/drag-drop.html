@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>drag-drop</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <script type="text/javascript">
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("Text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("Text");
+            ev.target.appendChild(document.getElementById(data));
+        }
+    </script>
+    <style type="text/css">
+        #drop1,#drag1{border:1px solid gray;width:200px;height:30px;line-height:30px;}
+        #drop1{margin:5px 0;}
+    </style>
+</head>
+<body>
+    <h2>drag-drop-study1</h2>
+    <div id="drop1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    
+    <div id="drag1" draggable="true" ondragstart="drag(event)">
+        我是要拖放的文字！
+    </div>
+
+    <h2>drag-drop-study2</h2>
+    <div id="drop1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    
+    <div id="drag1" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <span id="drag-drop" draggable="true" ondragstart="drag(event)">我是要拖放的文字！</span>
+    </div>
+    <h2>可编辑的区域</h2>
+    <div  contenteditable="true">我要好好学习！</div>
+</body>
+</html>
