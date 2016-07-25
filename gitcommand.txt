@@ -1,0 +1,2 @@
+1、git reset --hard HEAD~1（撤销最后一次的提交，是彻底的）
+2、git push --force（将本次变更强行推送至服务器）
