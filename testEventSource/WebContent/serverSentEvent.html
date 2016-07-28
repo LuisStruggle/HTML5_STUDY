@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>server-sent event</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+</head>
+<body>
+    <!-- Server-Sent 事件指的是网页自动获取来自服务器的更新。以前也可能做到这一点，前提是网页不得不询问是否有可用的更新。通过服务器发送事件，更新能够自动到达。-->
+    <h2>server-sent event学习</h2>
+    <div>服务器发送事件：<span id="test"></span></div>
+    <script type="text/javascript">
+        // 判断浏览器是否支持服务器发送事件
+        if(typeof(EventSource)!="undefined"){            
+            var source = new EventSource("/testEventSource/test");
+
+            source.onmessage = function(event) {
+            	document.getElementById("test").innerHTML+=event.data+"<br/>";
+            }
+            source.onerror = function(event) {
+                console.log(event);
+            }
+            
+        }else{
+            document.getElementById("test").innerHTML="你的浏览器暂不支持server-sent event";
+        }
+    </script>
+</body>
+</html>
