@@ -79,5 +79,33 @@
     <p>本侧边栏使用 <code>&lt;aside&gt;</code> 标签，通常用于放置与周围内容相关但又可独立的内容，比如广告、引用等。</p>
 </aside>
 
+<section id="storage">
+    <h2>Web 存储 (LocalStorage)</h2>
+    <button onclick="saveData()">保存数据</button>
+    <button onclick="loadData()">读取数据</button>
+    <p id="storage_status">状态：点击按钮进行操作。</p>
+
+    <script>
+        function saveData() {
+            // 检查浏览器是否支持 Web Storage
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem("username", "GeminiUserCN");
+                document.getElementById("storage_status").textContent = "状态：数据 'GeminiUserCN' 已保存到 LocalStorage。";
+            } else {
+                document.getElementById("storage_status").textContent = "抱歉，您的浏览器不支持 Web Storage。";
+            }
+        }
+
+        function loadData() {
+            const username = localStorage.getItem("username");
+            if (username) {
+                document.getElementById("storage_status").textContent = "状态：从 LocalStorage 读取到数据：" + username;
+            } else {
+                document.getElementById("storage_status").textContent = "状态：LocalStorage 中没有找到 'username' 数据。";
+            }
+        }
+    </script>
+</section>
+
 </body>
 </html>
