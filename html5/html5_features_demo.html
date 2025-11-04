@@ -35,6 +35,19 @@
         </video>
     </article>
 
+    <article>
+        <h3>🎨 绘图 (Canvas)</h3>
+        <div class="canvas-container">
+            <canvas id="myCanvas" width="200" height="100" style="background-color: #eee;"></canvas>
+        </div>
+        <script>
+            // 使用 JavaScript 在 Canvas 上绘图
+            const canvas = document.getElementById('myCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'red';
+            ctx.fillRect(10, 10, 150, 80); // 绘制一个红色的矩形
+        </script>
+    </article>
 </section>
 
 </body>
