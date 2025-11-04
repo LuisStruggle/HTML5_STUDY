@@ -50,5 +50,17 @@
     </article>
 </section>
 
+<section id="form">
+    <h2>表单增强特性</h2>
+    <form onsubmit="alert('表单验证通过，尝试提交！'); return false;">
+        <p>
+            <label for="user_email">邮箱 (type="email", 内置验证):</label>
+            <input type="email" id="user_email" required placeholder="请输入有效的邮箱">
+            <span style="color:red;">* (必填)</span>
+        </p>
+        <button type="submit">提交表单</button>
+    </form>
+</section>
+
 </body>
 </html>
