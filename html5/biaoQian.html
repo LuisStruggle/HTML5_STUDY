@@ -11,9 +11,9 @@
     <h2>figure和figcaption的学习</h2>
     <figure style="width:690px;">
         <figcaption>我是定义figure （标签规定独立的流内容：图像、图表、照片、代码等等）的标签</figcaption>
-        <img src="flower.png" />
-        <img src="flower.png" />
-        <img src="flower.png" />
+        <img class="rotation-image" src="flower.png" />
+        <img class="rotation-image" src="flower.png" style="display:none;" />
+        <img class="rotation-image" src="flower.png" style="display:none;" />
     </figure>
     
     <!-- 测试2 -->
@@ -75,5 +75,17 @@
         <h1>Internet Explorer 9</h1>
         <p>Windows Internet Explorer 9（简称 IE9）于 2011 年 3 月 14 日发布.....</p>
     </div>
+
+    <script type="text/javascript">
+        var rotationImages = document.querySelectorAll('.rotation-image');
+        var currentImageIndex = 0;
+
+        setInterval(function () {
+            rotationImages[currentImageIndex].style.display = 'none';
+            currentImageIndex = (currentImageIndex + 1) % rotationImages.length;
+            rotationImages[currentImageIndex].style.display = '';
+        }, 10000);
+    </script>
+
 </body>
 </html>
