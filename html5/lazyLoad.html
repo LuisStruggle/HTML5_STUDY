@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>页面延迟加载案例</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f5f7fb; color: #222; }
+    header { position: sticky; top: 0; background: #0d6efd; color: #fff; padding: 12px 16px; }
+    .container { max-width: 900px; margin: 0 auto; padding: 16px; }
+    .hint { padding: 12px; background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+    .spacer { height: 320px; display: flex; align-items: center; justify-content: center; color: #888; }
+    .card { margin: 16px 0; min-height: 180px; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,.08); overflow: hidden; }
+    .placeholder { height: 180px; background: linear-gradient(90deg,#efefef 25%,#e5e5e5 37%,#efefef 63%); background-size: 400% 100%; animation: loading 1.2s infinite; }
+    .content { display: none; padding: 14px; }
+    .content img { width: 100%; border-radius: 8px; display: block; }
+    .loaded .placeholder { display: none; }
+    .loaded .content { display: block; }
+    @keyframes loading { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+  </style>
+</head>
+<body>
+  <header>IntersectionObserver 页面延迟加载示例</header>
+  <div class="container">
+    <p class="hint">向下滚动，卡片进入视口后才会加载真实内容，避免首屏一次性加载全部资源。</p>
+
+    <div class="spacer">继续滚动查看更多内容 ↓</div>
+
+    <div class="card lazy-card" data-title="第一块内容" data-img="https://picsum.photos/id/1025/800/420"></div>
+    <div class="card lazy-card" data-title="第二块内容" data-img="https://picsum.photos/id/1039/800/420"></div>
+    <div class="card lazy-card" data-title="第三块内容" data-img="https://picsum.photos/id/1043/800/420"></div>
+    <div class="card lazy-card" data-title="第四块内容" data-img="https://picsum.photos/id/1069/800/420"></div>
+  </div>
+
+  <script>
+    function renderSkeleton(card) {
+      card.innerHTML = '<div class="placeholder"></div><div class="content"></div>';
+    }
+
+    function fillCard(card) {
+      const title = card.dataset.title;
+      const img = card.dataset.img;
+      const content = card.querySelector('.content');
+      content.innerHTML = '<h3>' + title + '</h3><img alt="' + title + '" src="' + img + '" loading="lazy"><p>该内容在进入可视区域时才被创建与加载。</p>';
+      card.classList.add('loaded');
+    }
+
+    const cards = document.querySelectorAll('.lazy-card');
+    cards.forEach(renderSkeleton);
+
+    const observer = new IntersectionObserver(function(entries, obs) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          fillCard(entry.target);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '120px 0px', threshold: 0.1 });
+
+    cards.forEach(function(card) { observer.observe(card); });
+  </script>
+</body>
+</html>
