@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>图片轮转示例</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 24px;
+        }
+        .carousel {
+            width: 640px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+        }
+        .viewport {
+            position: relative;
+            height: 360px;
+            background: #111;
+        }
+        .viewport img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .caption {
+            padding: 12px 16px;
+            font-size: 14px;
+            color: #333;
+            background: #fafafa;
+            border-top: 1px solid #ececec;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 16px 16px;
+            gap: 12px;
+        }
+        button {
+            border: none;
+            border-radius: 6px;
+            padding: 10px 18px;
+            cursor: pointer;
+            color: #fff;
+            background: #4a6cf7;
+        }
+        button:hover { background: #3a57cc; }
+        .hint {
+            text-align: center;
+            margin-top: 12px;
+            color: #666;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel">
+        <div class="viewport">
+            <img id="carouselImage" src="flower.png" alt="轮转图片">
+        </div>
+        <div class="caption" id="carouselCaption">示例 1：flower.png</div>
+        <div class="controls">
+            <button id="prevBtn" type="button">上一张</button>
+            <button id="toggleBtn" type="button">暂停自动轮转</button>
+            <button id="nextBtn" type="button">下一张</button>
+        </div>
+    </div>
+    <div class="hint">每 2.5 秒自动切换，也可手动点击按钮控制。</div>
+
+    <script>
+        var slides = [
+            { src: 'flower.png', text: '示例 1：flower.png' },
+            { src: 'html5.jpg', text: '示例 2：html5.jpg' },
+            { src: 'vp_poster.jpg', text: '示例 3：vp_poster.jpg' }
+        ];
+
+        var current = 0;
+        var timer = null;
+        var playing = true;
+
+        var imageEl = document.getElementById('carouselImage');
+        var captionEl = document.getElementById('carouselCaption');
+        var toggleBtn = document.getElementById('toggleBtn');
+
+        function render() {
+            imageEl.src = slides[current].src;
+            captionEl.textContent = slides[current].text;
+        }
+
+        function next() {
+            current = (current + 1) % slides.length;
+            render();
+        }
+
+        function prev() {
+            current = (current - 1 + slides.length) % slides.length;
+            render();
+        }
+
+        function start() {
+            timer = setInterval(next, 2500);
+            playing = true;
+            toggleBtn.textContent = '暂停自动轮转';
+        }
+
+        function stop() {
+            clearInterval(timer);
+            timer = null;
+            playing = false;
+            toggleBtn.textContent = '继续自动轮转';
+        }
+
+        document.getElementById('nextBtn').onclick = function () {
+            next();
+        };
+
+        document.getElementById('prevBtn').onclick = function () {
+            prev();
+        };
+
+        toggleBtn.onclick = function () {
+            if (playing) {
+                stop();
+            } else {
+                start();
+            }
+        };
+
+        start();
+    </script>
+</body>
+</html>
