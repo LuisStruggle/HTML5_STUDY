@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML 多级菜单示例</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            padding: 28px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #2563eb, #14b8a6);
+            color: #fff;
+        }
+
+        header h1 {
+            margin: 0 0 8px;
+            font-size: 30px;
+        }
+
+        header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .menu-wrap {
+            background: #111827;
+            box-shadow: 0 6px 18px rgba(17, 24, 39, 0.18);
+        }
+
+        .menu {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 0;
+            list-style: none;
+            display: flex;
+        }
+
+        .menu li {
+            position: relative;
+        }
+
+        .menu a {
+            display: block;
+            min-width: 126px;
+            padding: 16px 20px;
+            color: #f9fafb;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .menu a:hover,
+        .menu a:focus,
+        .menu li:hover > a,
+        .menu li:focus-within > a {
+            background: #2563eb;
+            color: #fff;
+            outline: none;
+        }
+
+        .menu a.has-children::after {
+            content: " ▾";
+            font-size: 12px;
+        }
+
+        .submenu a.has-children::after {
+            content: " ▸";
+            float: right;
+            margin-left: 16px;
+        }
+
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 10;
+            min-width: 210px;
+            padding: 6px 0;
+            margin: 0;
+            list-style: none;
+            background: #1f2937;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 12px 28px rgba(17, 24, 39, 0.24);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+        }
+
+        .submenu .submenu {
+            top: -6px;
+            left: 100%;
+            border-radius: 10px;
+            transform: translateX(10px);
+        }
+
+        .menu li:hover > .submenu,
+        .menu li:focus-within > .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(0, 0);
+        }
+
+        main {
+            max-width: 1040px;
+            margin: 32px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            padding: 24px;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: #2563eb;
+        }
+
+        code {
+            padding: 2px 6px;
+            background: #eef2ff;
+            border-radius: 4px;
+            color: #3730a3;
+        }
+
+        @media (max-width: 720px) {
+            .menu {
+                display: block;
+            }
+
+            .menu a {
+                min-width: auto;
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+            }
+
+            .submenu,
+            .submenu .submenu {
+                position: static;
+                display: none;
+                min-width: auto;
+                box-shadow: none;
+                border-radius: 0;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                background: #273449;
+            }
+
+            .menu li:hover > .submenu,
+            .menu li:focus-within > .submenu {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>HTML 多级菜单功能示例</h1>
+        <p>使用语义化列表、CSS 悬停和 focus-within 实现三级下拉菜单。</p>
+    </header>
+
+    <nav class="menu-wrap" aria-label="主导航">
+        <ul class="menu">
+            <li><a href="#home">首页</a></li>
+            <li>
+                <a class="has-children" href="#courses">课程中心</a>
+                <ul class="submenu">
+                    <li><a href="#html">HTML 基础</a></li>
+                    <li>
+                        <a class="has-children" href="#css">CSS 进阶</a>
+                        <ul class="submenu">
+                            <li><a href="#layout">布局技巧</a></li>
+                            <li><a href="#animation">动画效果</a></li>
+                            <li><a href="#responsive">响应式设计</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="has-children" href="#javascript">JavaScript</a>
+                        <ul class="submenu">
+                            <li><a href="#dom">DOM 操作</a></li>
+                            <li><a href="#event">事件处理</a></li>
+                            <li><a href="#ajax">Ajax 请求</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="has-children" href="#examples">实战案例</a>
+                <ul class="submenu">
+                    <li><a href="#site">企业官网</a></li>
+                    <li><a href="#dashboard">数据看板</a></li>
+                    <li><a href="#mall">电商页面</a></li>
+                </ul>
+            </li>
+            <li><a href="#about">关于我们</a></li>
+            <li><a href="#contact">联系我们</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="card">
+            <h2>实现说明</h2>
+            <p>菜单结构使用嵌套的 <code>&lt;ul&gt;</code> 和 <code>&lt;li&gt;</code> 表示层级，二级和三级菜单通过 <code>.submenu</code> 控制显示与定位。</p>
+            <p>桌面端鼠标悬停即可展开子菜单；键盘用户可以通过 Tab 聚焦菜单项，借助 <code>:focus-within</code> 展开对应层级。</p>
+            <p>在窄屏设备上，菜单自动改为纵向排列，子菜单跟随父级在文档流中展开，避免超出屏幕。</p>
+        </section>
+    </main>
+</body>
+</html>
