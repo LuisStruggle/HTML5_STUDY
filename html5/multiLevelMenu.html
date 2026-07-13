@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML 多级菜单示例</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      background: linear-gradient(135deg, #e0f2fe, #eef2ff 48%, #f8fafc);
+      color: #172033;
+    }
+
+    .page {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 48px 0;
+    }
+
+    .hero {
+      margin-bottom: 24px;
+      padding: 28px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero h1 { margin: 0 0 10px; font-size: clamp(28px, 4vw, 44px); }
+    .hero p { margin: 0; color: #475569; line-height: 1.8; }
+
+    .menu-shell {
+      position: relative;
+      z-index: 5;
+      border-radius: 16px;
+      background: #0f172a;
+      box-shadow: 0 18px 38px rgba(15, 23, 42, 0.22);
+    }
+
+    .menu,
+    .submenu {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .menu {
+      display: flex;
+      align-items: center;
+      min-height: 58px;
+    }
+
+    .menu-item { position: relative; }
+
+    .menu-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      min-width: 118px;
+      padding: 18px 20px;
+      color: #e2e8f0;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background .2s ease, color .2s ease;
+    }
+
+    .menu-link:hover,
+    .menu-link:focus,
+    .menu-item:focus-within > .menu-link {
+      color: #fff;
+      background: #1e293b;
+      outline: none;
+    }
+
+    .arrow { font-size: 12px; opacity: .72; }
+
+    .submenu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 210px;
+      padding: 8px;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 18px 36px rgba(15, 23, 42, 0.18);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
+    }
+
+    .submenu .submenu {
+      top: -8px;
+      left: calc(100% + 8px);
+      transform: translateX(10px);
+    }
+
+    .menu-item:hover > .submenu,
+    .menu-item:focus-within > .submenu,
+    .menu-item.open > .submenu {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(0, 0);
+    }
+
+    .submenu .menu-link {
+      min-width: 0;
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 8px;
+      color: #1f2937;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .submenu .menu-link:hover,
+    .submenu .menu-link:focus,
+    .submenu .menu-item:focus-within > .menu-link {
+      color: #0f172a;
+      background: #e0f2fe;
+    }
+
+    .content-card {
+      margin-top: 28px;
+      padding: 24px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 16px 38px rgba(15, 23, 42, 0.1);
+      line-height: 1.8;
+    }
+
+    code {
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: #e2e8f0;
+    }
+
+    @media (max-width: 760px) {
+      .menu { display: block; padding: 8px; }
+      .menu-link { width: 100%; border-radius: 10px; }
+      .submenu,
+      .submenu .submenu {
+        position: static;
+        display: none;
+        min-width: 100%;
+        margin: 4px 0 4px 14px;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+      }
+      .menu-item.open > .submenu { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <h1>HTML 多级菜单功能示例</h1>
+      <p>示例包含三级导航、鼠标悬停展开、键盘 Tab 聚焦展开，以及移动端点击展开/收起的交互。</p>
+    </section>
+
+    <nav class="menu-shell" aria-label="主导航">
+      <ul class="menu">
+        <li class="menu-item"><a class="menu-link" href="#home">首页</a></li>
+        <li class="menu-item has-submenu">
+          <a class="menu-link" href="#products" aria-haspopup="true" aria-expanded="false">产品中心 <span class="arrow">▼</span></a>
+          <ul class="submenu" aria-label="产品中心子菜单">
+            <li class="menu-item"><a class="menu-link" href="#web">Web 前端</a></li>
+            <li class="menu-item has-submenu">
+              <a class="menu-link" href="#mobile" aria-haspopup="true" aria-expanded="false">移动开发 <span class="arrow">▶</span></a>
+              <ul class="submenu" aria-label="移动开发子菜单">
+                <li class="menu-item"><a class="menu-link" href="#ios">iOS 应用</a></li>
+                <li class="menu-item"><a class="menu-link" href="#android">Android 应用</a></li>
+                <li class="menu-item"><a class="menu-link" href="#miniapp">小程序</a></li>
+              </ul>
+            </li>
+            <li class="menu-item"><a class="menu-link" href="#cloud">云服务</a></li>
+          </ul>
+        </li>
+        <li class="menu-item has-submenu">
+          <a class="menu-link" href="#docs" aria-haspopup="true" aria-expanded="false">学习资料 <span class="arrow">▼</span></a>
+          <ul class="submenu" aria-label="学习资料子菜单">
+            <li class="menu-item"><a class="menu-link" href="#html">HTML5 入门</a></li>
+            <li class="menu-item"><a class="menu-link" href="#css">CSS 布局</a></li>
+            <li class="menu-item has-submenu">
+              <a class="menu-link" href="#javascript" aria-haspopup="true" aria-expanded="false">JavaScript <span class="arrow">▶</span></a>
+              <ul class="submenu" aria-label="JavaScript 子菜单">
+                <li class="menu-item"><a class="menu-link" href="#dom">DOM 操作</a></li>
+                <li class="menu-item"><a class="menu-link" href="#event">事件处理</a></li>
+                <li class="menu-item"><a class="menu-link" href="#storage">本地存储</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="menu-item"><a class="menu-link" href="#about">关于我们</a></li>
+      </ul>
+    </nav>
+
+    <section class="content-card">
+      <h2>实现要点</h2>
+      <p>菜单结构使用嵌套的 <code>&lt;ul&gt;</code> 与 <code>&lt;li&gt;</code>，桌面端通过 <code>:hover</code> 和 <code>:focus-within</code> 展开子菜单，移动端通过 JavaScript 切换 <code>open</code> 类名。</p>
+    </section>
+  </main>
+
+  <script>
+    const expandableItems = document.querySelectorAll('.has-submenu > .menu-link');
+
+    expandableItems.forEach(function(link) {
+      link.addEventListener('click', function(event) {
+        if (window.matchMedia('(max-width: 760px)').matches) {
+          event.preventDefault();
+          const item = link.parentElement;
+          const isOpen = item.classList.toggle('open');
+          link.setAttribute('aria-expanded', String(isOpen));
+        }
+      });
+    });
+
+    document.addEventListener('click', function(event) {
+      if (!window.matchMedia('(max-width: 760px)').matches) {
+        return;
+      }
+
+      if (!event.target.closest('.menu-shell')) {
+        document.querySelectorAll('.menu-item.open').forEach(function(item) {
+          item.classList.remove('open');
+          const link = item.querySelector(':scope > .menu-link');
+          if (link) {
+            link.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
