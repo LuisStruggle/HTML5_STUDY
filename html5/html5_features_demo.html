@@ -9,6 +9,17 @@
         header, footer, section, nav, article, aside { border: 1px solid #ccc; margin-bottom: 15px; padding: 10px; border-radius: 5px; }
         header, footer { background-color: #f0f0f0; }
         .canvas-container { border: 1px dashed blue; padding: 5px; }
+        .zoom-demo { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+        .zoom-stage { position: relative; width: 320px; height: 210px; overflow: hidden; border-radius: 10px; border: 1px solid #bbb; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
+        .zoom-stage img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .zoom-icon { position: absolute; left: 120px; top: 75px; width: 48px; height: 48px; border-radius: 50%; border: 3px solid #fff; background: rgba(0, 130, 255, .85); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 2px 8px rgba(0,0,0,.35); cursor: grab; user-select: none; touch-action: none; transition: left .22s ease-out, top .22s ease-out, transform .22s ease-out, box-shadow .22s ease-out; animation: zoomIconPulse 1.8s ease-in-out infinite; }
+        .zoom-icon:active, .zoom-icon.is-dragging { cursor: grabbing; transform: scale(1.12); box-shadow: 0 6px 16px rgba(0,0,0,.4); animation: none; }
+        .zoom-preview { width: 220px; height: 160px; border: 1px solid #bbb; border-radius: 10px; background-image: url("html5.jpg"); background-repeat: no-repeat; background-size: 640px 420px; box-shadow: inset 0 0 0 3px rgba(0,130,255,.15); transition: background-position .22s ease-out, background-size .22s ease-out; }
+        @keyframes zoomIconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+        .zoom-tip { margin-top: 8px; color: #555; }
     </style>
 </head>
 <body>
@@ -46,6 +57,80 @@
             const ctx = canvas.getContext('2d');
             ctx.fillStyle = 'red';
             ctx.fillRect(10, 10, 150, 80); // 绘制一个红色的矩形
+        </script>
+    </article>
+
+    <article>
+        <h3>🔎 图标移动上图放大</h3>
+        <div class="zoom-demo">
+            <div class="zoom-stage" id="zoomStage">
+                <img src="html5.jpg" alt="HTML5 示例图片">
+                <div class="zoom-icon" id="zoomIcon" role="button" aria-label="拖动图标查看局部放大">🔍</div>
+            </div>
+            <div>
+                <strong>放大预览</strong>
+                <div class="zoom-preview" id="zoomPreview" aria-label="图片局部放大预览"></div>
+                <p class="zoom-tip">拖动蓝色放大镜图标或点击图片任意位置，图标会带动画移动，右侧同步显示 2 倍局部放大图。</p>
+            </div>
+        </div>
+        <script>
+            (function() {
+                const stage = document.getElementById('zoomStage');
+                const icon = document.getElementById('zoomIcon');
+                const preview = document.getElementById('zoomPreview');
+                const zoom = 2;
+                let dragging = false;
+
+                function moveIcon(clientX, clientY) {
+                    const rect = stage.getBoundingClientRect();
+                    const iconSize = icon.offsetWidth;
+                    const maxX = rect.width - iconSize;
+                    const maxY = rect.height - iconSize;
+                    const left = Math.max(0, Math.min(clientX - rect.left - iconSize / 2, maxX));
+                    const top = Math.max(0, Math.min(clientY - rect.top - iconSize / 2, maxY));
+                    icon.style.left = left + 'px';
+                    icon.style.top = top + 'px';
+                    updatePreview(left + iconSize / 2, top + iconSize / 2, rect.width, rect.height);
+                }
+
+                function updatePreview(centerX, centerY, stageWidth, stageHeight) {
+                    const previewWidth = preview.clientWidth;
+                    const previewHeight = preview.clientHeight;
+                    preview.style.backgroundSize = (stageWidth * zoom) + 'px ' + (stageHeight * zoom) + 'px';
+                    preview.style.backgroundPosition =
+                        (previewWidth / 2 - centerX * zoom) + 'px ' +
+                        (previewHeight / 2 - centerY * zoom) + 'px';
+                }
+
+                stage.addEventListener('pointerdown', function(event) {
+                    dragging = event.target === icon;
+                    if (dragging) {
+                        icon.setPointerCapture(event.pointerId);
+                        icon.classList.add('is-dragging');
+                    }
+                    moveIcon(event.clientX, event.clientY);
+                });
+
+                icon.addEventListener('pointermove', function(event) {
+                    if (dragging) {
+                        moveIcon(event.clientX, event.clientY);
+                    }
+                });
+
+                icon.addEventListener('pointerup', function(event) {
+                    dragging = false;
+                    icon.classList.remove('is-dragging');
+                    icon.releasePointerCapture(event.pointerId);
+                });
+
+                icon.addEventListener('pointercancel', function(event) {
+                    dragging = false;
+                    icon.classList.remove('is-dragging');
+                    icon.releasePointerCapture(event.pointerId);
+                });
+
+                updatePreview(144, 99, stage.clientWidth, stage.clientHeight);
+            }());
         </script>
     </article>
 </section>
