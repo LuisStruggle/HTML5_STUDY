@@ -12,9 +12,13 @@
         .zoom-demo { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
         .zoom-stage { position: relative; width: 320px; height: 210px; overflow: hidden; border-radius: 10px; border: 1px solid #bbb; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
         .zoom-stage img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .zoom-icon { position: absolute; left: 120px; top: 75px; width: 48px; height: 48px; border-radius: 50%; border: 3px solid #fff; background: rgba(0, 130, 255, .85); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 2px 8px rgba(0,0,0,.35); cursor: grab; user-select: none; touch-action: none; }
-        .zoom-icon:active { cursor: grabbing; }
-        .zoom-preview { width: 220px; height: 160px; border: 1px solid #bbb; border-radius: 10px; background-image: url("html5.jpg"); background-repeat: no-repeat; background-size: 640px 420px; box-shadow: inset 0 0 0 3px rgba(0,130,255,.15); }
+        .zoom-icon { position: absolute; left: 120px; top: 75px; width: 48px; height: 48px; border-radius: 50%; border: 3px solid #fff; background: rgba(0, 130, 255, .85); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 2px 8px rgba(0,0,0,.35); cursor: grab; user-select: none; touch-action: none; transition: left .22s ease-out, top .22s ease-out, transform .22s ease-out, box-shadow .22s ease-out; animation: zoomIconPulse 1.8s ease-in-out infinite; }
+        .zoom-icon:active, .zoom-icon.is-dragging { cursor: grabbing; transform: scale(1.12); box-shadow: 0 6px 16px rgba(0,0,0,.4); animation: none; }
+        .zoom-preview { width: 220px; height: 160px; border: 1px solid #bbb; border-radius: 10px; background-image: url("html5.jpg"); background-repeat: no-repeat; background-size: 640px 420px; box-shadow: inset 0 0 0 3px rgba(0,130,255,.15); transition: background-position .22s ease-out, background-size .22s ease-out; }
+        @keyframes zoomIconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
         .zoom-tip { margin-top: 8px; color: #555; }
     </style>
 </head>
@@ -66,7 +70,7 @@
             <div>
                 <strong>放大预览</strong>
                 <div class="zoom-preview" id="zoomPreview" aria-label="图片局部放大预览"></div>
-                <p class="zoom-tip">拖动蓝色放大镜图标，右侧会同步显示图标所在位置的 2 倍局部放大图。</p>
+                <p class="zoom-tip">拖动蓝色放大镜图标或点击图片任意位置，图标会带动画移动，右侧同步显示 2 倍局部放大图。</p>
             </div>
         </div>
         <script>
@@ -98,9 +102,12 @@
                         (previewHeight / 2 - centerY * zoom) + 'px';
                 }
 
-                icon.addEventListener('pointerdown', function(event) {
-                    dragging = true;
-                    icon.setPointerCapture(event.pointerId);
+                stage.addEventListener('pointerdown', function(event) {
+                    dragging = event.target === icon;
+                    if (dragging) {
+                        icon.setPointerCapture(event.pointerId);
+                        icon.classList.add('is-dragging');
+                    }
                     moveIcon(event.clientX, event.clientY);
                 });
 
@@ -112,6 +119,13 @@
 
                 icon.addEventListener('pointerup', function(event) {
                     dragging = false;
+                    icon.classList.remove('is-dragging');
+                    icon.releasePointerCapture(event.pointerId);
+                });
+
+                icon.addEventListener('pointercancel', function(event) {
+                    dragging = false;
+                    icon.classList.remove('is-dragging');
                     icon.releasePointerCapture(event.pointerId);
                 });
 
